@@ -1,0 +1,12 @@
+<?php
+
+/**
+ * Implements hook_theme().
+ */
+function products_theme($existing, $type, $theme, $path) {
+  return [
+    'products-template' => [
+      'variables' => ['test_var' => NULL],
+    ],
+  ];
+}
