@@ -1,0 +1,5 @@
+name: Products
+type: module
+description: Products home page
+package: custom
+core: 8.x

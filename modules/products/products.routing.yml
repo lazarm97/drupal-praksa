@@ -1,0 +1,6 @@
+products:
+  path: /products
+  defaults:
+    _controller: Drupal\products\Controller\ProductsController::products
+  requirements:
+    _permission: 'access content'
