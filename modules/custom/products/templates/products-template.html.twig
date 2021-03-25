@@ -5,6 +5,11 @@
  *
  */
 #}
+{#{{ breakpoint() }}#}
 <p>Test twig template!</p>
+{% for product in products %}
+  <p>{{ product.product.title }}</p>
+  <p>{{ product.product.description }}</p>
+  <img src={{ product.product.image }} alt="bike" style="width:200px;height:200px;">
+{% endfor %}
 
-<p>test_var: {{ test_var }}</p>

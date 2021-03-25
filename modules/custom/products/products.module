@@ -6,7 +6,7 @@
 function products_theme($existing, $type, $theme, $path) {
   return [
     'products-template' => [
-      'variables' => ['test_var' => NULL],
+      'variables' => ['products' => null],
     ],
   ];
 }
