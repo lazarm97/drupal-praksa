@@ -6,7 +6,10 @@
 function products_theme($existing, $type, $theme, $path) {
   return [
     'products-template' => [
-      'variables' => ['products' => null],
+      'variables' => [
+        'products' => null,
+        'pagination' => null
+        ],
     ],
   ];
 }

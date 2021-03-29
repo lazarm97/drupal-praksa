@@ -7,14 +7,15 @@
 #}
 {#{{ breakpoint() }}#}
 <h2>Products template!!!!</h2>
-{% for product in products %}
-  <p>{{ product.product.title }}</p>
-  <p>{{ product.product.description }}</p>
-  <img src={{ file_url(product.product.image) }} alt="bike" style="width:200px;height:200px;">
-{% endfor %}
 <form action="/drupal-praksa/products" method="get">
   <label for="filter">Filter by title:</label>
   <input type="text" id="filter_title" name="filter_title"><br><br>
   <input type="submit" value="Submit">
 </form>
+{% for product in products %}
+  <p>{{ product.product.title }}</p>
+  <img src={{ file_url(product.product.image) }} alt="bike" style="width:200px;height:200px;">
+  <p>{{ product.product.description }}</p>
+{% endfor %}
+{{ pagination }}
 

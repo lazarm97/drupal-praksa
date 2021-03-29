@@ -4,3 +4,10 @@ products:
     _controller: Drupal\products\Controller\ProductsController::products
   requirements:
     _permission: 'access content'
+products.admin_settings:
+  path: '/admin/config/content/products'
+  defaults:
+    _form: '\Drupal\products\Form\paginationSettingsForm'
+    _title: 'example'
+  requirements:
+    _permission: 'administer site configuration'
