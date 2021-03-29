@@ -5,17 +5,29 @@
  *
  */
 #}
-{#{{ breakpoint() }}#}
 <h2>Products template!!!!</h2>
+{#{{ breakpoint() }}#}
 <form action="/drupal-praksa/products" method="get">
-  <label for="filter">Filter by title:</label>
-  <input type="text" id="filter_title" name="filter_title"><br><br>
+  <label for="filter_title">Filter by title:</label>
+  <input type="text" id="filter_title" name="filter_title">
+  <label for="filter_terms">Choose a term:</label>
+  <select name="filter_terms" id="filter_terms">
+    <option value="0">All</option>
+  {% for term in terms %}
+    <option value={{ term.id }}>{{ term.name }}</option>
+  {% endfor %}
+  </select>
   <input type="submit" value="Submit">
 </form>
 {% for product in products %}
   <p>{{ product.product.title }}</p>
   <img src={{ file_url(product.product.image) }} alt="bike" style="width:200px;height:200px;">
   <p>{{ product.product.description }}</p>
+  {% for term in product.product.terms %}
+    <a href="{{ path('entity.taxonomy_term.canonical', { 'taxonomy_term': term.id }) }}">
+      <h2>{{ term.name }}</h2>
+    </a>
+    {% endfor %}
 {% endfor %}
 {{ pagination }}
 

@@ -8,7 +8,8 @@ function products_theme($existing, $type, $theme, $path) {
     'products-template' => [
       'variables' => [
         'products' => null,
-        'pagination' => null
+        'pagination' => null,
+        'terms' => null
         ],
     ],
   ];
