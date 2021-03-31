@@ -5,29 +5,52 @@
  *
  */
 #}
-<h2>Products template!!!!</h2>
-{#{{ breakpoint() }}#}
-<form action="/drupal-praksa/products" method="get">
-  <label for="filter_title">Filter by title:</label>
-  <input type="text" id="filter_title" name="filter_title">
-  <label for="filter_terms">Choose a term:</label>
-  <select name="filter_terms" id="filter_terms">
-    <option value="0">All</option>
-  {% for term in terms %}
-    <option value={{ term.id }}>{{ term.name }}</option>
-  {% endfor %}
-  </select>
-  <input type="submit" value="Submit">
-</form>
-{% for product in products %}
-  <p>{{ product.product.title }}</p>
-  <img src={{ file_url(product.product.image) }} alt="bike" style="width:200px;height:200px;">
-  <p>{{ product.product.description }}</p>
-  {% for term in product.product.terms %}
-    <a href="{{ path('entity.taxonomy_term.canonical', { 'taxonomy_term': term.id }) }}">
-      <h2>{{ term.name }}</h2>
-    </a>
+<!DOCTYPE html>
+<html>
+<head>
+  {% block head %}
+    <link rel="stylesheet" href="/drupal-praksa/modules/custom/products/slick/slick.css"/>
+    <link rel="stylesheet" href="/drupal-praksa/modules/custom/products/assets/css/style.css"/>
+    <link rel="stylesheet" href="/drupal-praksa/modules/custom/products/slick/slick-theme.css"/>
+  {% endblock %}
+</head>
+<body>
+  <h2>Products template!!!!</h2>
+  {#{{ breakpoint() }}#}
+  <form action="/drupal-praksa/products" method="get">
+    <label for="filter_title">Filter by title:</label>
+    <input type="text" id="filter_title" name="filter_title">
+    <label for="filter_terms">Choose a term:</label>
+    <select name="filter_terms" id="filter_terms">
+      <option value="0">All</option>
+    {% for term in terms %}
+      <option value={{ term.id }}>{{ term.name }}</option>
     {% endfor %}
-{% endfor %}
-{{ pagination }}
-
+    </select>
+    <input type="submit" value="Submit">
+  </form>
+  {% for product in products %}
+    <p>{{ product.product.title }}</p>
+    <img src={{ file_url(product.product.image) }} alt="bike" style="width:200px;height:200px;">
+    <p>{{ product.product.description }}</p>
+    {% for term in product.product.terms %}
+      <a href="{{ path('entity.taxonomy_term.canonical', { 'taxonomy_term': term.id }) }}">
+        <h2>{{ term.name }}</h2>
+      </a>
+    {% endfor %}
+    <div class="for_slick_slider multiple-items">
+      {% for slide in product.product.slider %}
+      <div class="items">
+        <h2>{{ slide.title }}</h2>
+        <img src={{ file_url(slide.image) }} alt="">
+        <p>{{ slide.body }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  {% endfor %}
+  {{ pagination }}
+  <script src="/drupal-praksa/modules/custom/products/assets/js/jquery-3.6.0.min.js"></script>
+  <script src="/drupal-praksa/modules/custom/products/slick/slick.min.js"></script>
+  <script src="/drupal-praksa/modules/custom/products/assets/js/custom.js"></script>
+</body>
+</html>

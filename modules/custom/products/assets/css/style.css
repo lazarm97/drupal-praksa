@@ -1,0 +1,14 @@
+.for_slick_slider{
+  display: flex;
+}
+
+.for_slick_slider .items{
+  width: 350px;
+  height: auto;
+  margin: 50px;
+}
+
+.for_slick_slider .items img{
+  width: 350px;
+  height: 250px;
+}

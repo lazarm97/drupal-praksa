@@ -2,6 +2,7 @@
 
 namespace Drupal\products\Controller;
 use Drupal\file\Entity\File;
+use Drupal\paragraphs\Entity\Paragraph;
 use Drupal\taxonomy\Entity\Term;
 
 class ProductsController{
@@ -29,18 +30,36 @@ class ProductsController{
       $image_id = $product['field_image'][0]['target_id'];
       $image = File::load($image_id)->toArray();
       $image_uri = $image['uri'][0]['value'];
+      $slides_ids = [];
+      $slides = Paragraph::load($product['field_product_slider'][0]['target_id'])->toArray();
+      foreach ($slides['field_slides'] as $slide){
+        array_push($slides_ids,$slide['target_id']);
+      }
+      $slides = Paragraph::loadMultiple($slides_ids);
+      $slide_data = [];
+      foreach ($slides as $slide){
+        $slide = $slide->toArray();
+        $slide_image_id = $slide['field_image'][0]['target_id'];
+        $slide_image = File::load($slide_image_id)->toArray();
+        $slide_data[] = array(
+          'title' => $slide['field_title'][0]['value'],
+          'body' => $slide['field_body'][0]['value'],
+          'image' => $slide_image['uri'][0]['value']
+        );
+      }
       $term_data = [];
       foreach ($product['field_content_product_tags'] as $term){
         $term_data[] = array(
           'id' => $term['target_id'],
-          'name' => Term::load($term['target_id'])->get('name')->value
+          'name' => t(Term::load($term['target_id'])->get('name')->value)
         );
       }
       $tmp_info = ['product' => [
-        'title' => $product['field_title'][0]['value'],
-        'description' => $product['body'][0]['value'],
+        'title' => t($product['field_title'][0]['value']),
+        'description' => t($product['body'][0]['value']),
         'image' => $image_uri,
-        'terms' => $term_data
+        'terms' => $term_data,
+        'slider' => $slide_data
       ]];
       array_push($products_info,$tmp_info);
     }
@@ -52,7 +71,7 @@ class ProductsController{
       $term = $term->toArray();
       $term_data[] = array(
         'id' => $term['tid'][0]['value'],
-        'name' => $term['name'][0]['value']
+        'name' => t($term['name'][0]['value'])
       );
     }
     $pagination['suffix']['#markup'] = '</ol>'. \Drupal::service('renderer')->render($pager);
