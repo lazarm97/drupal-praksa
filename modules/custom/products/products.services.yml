@@ -1,0 +1,6 @@
+services:
+  products.ProcessLinkExtension:
+    class: Drupal\products\Extension\ProcessLinkExtension
+    tags:
+      - { name: twig.extension }
+
