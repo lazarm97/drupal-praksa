@@ -1,0 +1,5 @@
+name: Bookstore
+type: module
+description: Booksore home page
+package: custom
+core: 8.x

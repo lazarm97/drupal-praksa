@@ -2,7 +2,7 @@ name: Custom Theme
 type: theme
 description: Custom Theme
 core: 8.x
-base theme: stable
+base theme: bartik
 
 libraries:
   - custom_theme/global

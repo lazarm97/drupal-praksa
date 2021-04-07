@@ -1,0 +1,4 @@
+services:
+  bookstore.Books:
+    class: Drupal\bookstore\Services\BookstoreService
+#    arguments: ['%entity_type_manager']

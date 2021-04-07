@@ -1,0 +1,6 @@
+bookstore:
+  path: /bookstore
+  defaults:
+    _controller: Drupal\bookstore\Controller\BookstoreController:books
+  requirements:
+    _permission: 'access content'

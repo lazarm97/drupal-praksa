@@ -1,0 +1,14 @@
+<?php
+
+/**
+ * Implements hook_theme().
+ */
+function bookstore_theme($existing, $type, $theme, $path) {
+  return [
+    'bookstore-template' => [
+      'variables' => [
+        'books' => null
+      ],
+    ],
+  ];
+}

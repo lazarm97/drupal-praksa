@@ -1,0 +1,12 @@
+{% set books = books %}
+{#{{ breakpoint() }}#}
+{% for book in books %}
+  <h2>Title - {{ book.title }}</h2>
+  <strong>Price - {{ book.price }}</strong>
+  <h3>ISBN - {{ book.isbn }}</h3>
+  <h3>Comments</h3>
+  {% for comment in book.comments %}
+{#    {{ breakpoint(comment) }}#}
+    <p>{{ comment.body }}</p><br>
+  {% endfor %}
+{% endfor %}
