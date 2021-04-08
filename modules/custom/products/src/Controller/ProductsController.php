@@ -13,7 +13,7 @@ class ProductsController{
       $products_nodes_query->condition('title', $_GET['filter_title'], 'CONTAINS');
     if(isset($_GET['filter_terms']) && $_GET['filter_terms'] != "" && $_GET['filter_terms'] != 0)
       $products_nodes_query->condition('field_content_product_tags',$_GET['filter_terms'],'CONTAINS');
-    $products_nids = $products_nodes_query; //2
+    $products_nids = $products_nodes_query->execute(); //2
     \Drupal::service('pager.manager')->createPager(count($products_nids),$items_per_page); //Create global variable pager for render pagination
     $products_nodes_query->pager($items_per_page); //Create condition for products per page
     $products_nids = $products_nodes_query->execute();//1

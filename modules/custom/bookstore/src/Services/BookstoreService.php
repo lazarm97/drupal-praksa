@@ -3,32 +3,23 @@
 namespace Drupal\bookstore\Services;
 
 use Drupal\Core\Entity\EntityTypeManager;
+use GuzzleHttp\Client;
 
 class BookstoreService{
 
-  protected $node;
-  protected $comment;
   protected $entity_type_manager;
+  protected $http_client;
 
-  public function __construct(){
-//    $this->entity_type_manager = $entity_type_manager;
-    $this->entity_type_manager = \Drupal::entityTypeManager();
-    $this->node = $this->entity_type_manager->getStorage('node');
-    $this->comment = $this->entity_type_manager->getStorage('comment');
-  }
-
-  private function getBooksFromXml(){
-    $xml_string = file_get_contents("https://www.chilkatsoft.com/xml-samples/bookstore.xml");
-    $xml = simplexml_load_string($xml_string);
-    $json = json_encode($xml);
-    return json_decode($json, true);
+  public function __construct(EntityTypeManager $entityTypeManager, Client $client){
+    $this->entity_type_manager = $entityTypeManager;
+    $this->http_client = $client;
   }
 
   public function showBooks(){
-    $books = $this->getBooksFromXml();
-
+    $books_xml = new \SimpleXMLElement($this->http_client->get("https://www.chilkatsoft.com/xml-samples/bookstore.xml")->getBody()->getContents());
+    $books = json_decode(json_encode($books_xml),true);
     foreach ($books['book'] as $book){
-      $book_entity = $this->node->create(
+      $book_entity = $this->entity_type_manager->getStorage('node')->create(
         [
           'type' => 'book',
           'title' => $book['title'],
@@ -37,7 +28,7 @@ class BookstoreService{
           'field_price' => $book['price']
         ]
       );
-      $this->node->save($book_entity);
+      $this->entity_type_manager->getStorage('node')->save($book_entity);
 
       if(isset($book['comments']) && is_array($book['comments']['userComment']))
         $comments = $book['comments']['userComment'];
@@ -48,7 +39,7 @@ class BookstoreService{
 
       if(count($comments) > 0){
         foreach ($comments as $comment){
-          $comment_entity = $this->comment->create(
+          $comment_entity = $this->entity_type_manager->getStorage('comment')->create(
             [
               'entity_type' => $book_entity->getEntityTypeId(),
               'entity_id' => $book_entity->id(),
@@ -59,7 +50,7 @@ class BookstoreService{
               'comment_body' => $comment
             ]
           );
-          $this->comment->save($comment_entity);
+          $this->entity_type_manager->getStorage('comment')->save($comment_entity);
         }
       }
     }
@@ -68,10 +59,10 @@ class BookstoreService{
   }
 
   public function getBooks(){
-    $ids = $this->node->getQuery()
+    $ids = $this->entity_type_manager->getStorage('node')->getQuery()
       ->condition('type', 'book')
       ->execute();
-    return $this->node->loadMultiple($ids);
+    return $this->entity_type_manager->getStorage('node')->loadMultiple($ids);
   }
 }
 

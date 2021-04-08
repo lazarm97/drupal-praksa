@@ -1,4 +1,8 @@
-global:
+#global:
+#  css:
+#    theme:
+#      css/global.css: {}
+bootstrap:
   css:
     theme:
-      css/global.css: {}
+      css/bootstrap.min.css: {}
