@@ -55,13 +55,10 @@
     <header id="header" class="header" role="banner">
       <div class="section layout-container clearfix">
         {{ page.secondary_menu }}
-        {% if page.header %}
-          {{ attach_library('custom_theme/bootstrap') }}
-          <nav class="navbar">
-            <div class="container-fluid">{{ page.header }}</div>
-          </nav>
+        {{ page.header }}
+        {% if page.primary_menu %}
+            {{ page.primary_menu }}
         {% endif %}
-        {{ page.primary_menu }}
       </div>
     </header>
     {% if page.highlighted %}

@@ -31,9 +31,9 @@
   {% import _self as menus %}
   {% if items %}
     {% if menu_level == 0 %}
-      <ul class="nav navbar-nav">
+      <ul class="nav navbar-nav mr-auto">
     {% else %}
-      <ul class="nav navbar-nav">
+      <ul class="nav navbar-nav mr-auto">
     {% endif %}
     {% for item in items %}
       {%
@@ -41,11 +41,11 @@
           'menu-item',
           item.is_expanded ? 'menu-item--expanded',
           item.is_collapsed ? 'menu-item--collapsed',
-          item.in_active_trail ? 'menu-item--active-trail',
+          item.in_active_trail ? 'active'
         ]
       %}
       <li{{ item.attributes.addClass(classes) }}>
-        {{ link(item.title, item.url) }}
+        {{ link(item.title, item.url, { 'class':['nav-link'] }) }}
         {% if item.below %}
           {{ menus.menu_links(item.below, attributes, menu_level + 1) }}
         {% endif %}
