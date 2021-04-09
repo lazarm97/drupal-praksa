@@ -4,6 +4,12 @@ products:
     _controller: Drupal\products\Controller\ProductsController::products
   requirements:
     _permission: 'access content'
+products.parent:
+  path: /products/parent
+  defaults:
+    _controller: Drupal\products\Controller\ProductsController::parent
+  requirements:
+    _permission: 'access content'
 products.admin_settings:
   path: '/admin/config/content/products'
   defaults:

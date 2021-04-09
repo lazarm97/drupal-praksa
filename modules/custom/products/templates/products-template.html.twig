@@ -33,7 +33,7 @@
   {% for product in products %}
     <p>{{ product.title }}</p>
     <img src={{ file_url(product.image) }} alt="bike" style="width:200px;height:200px;">
-    <p>{{ product.description }}</p>
+    <p>{{ product.description|striptags }}</p>
     {% for term in product.terms %}
       <a href="{{ path('entity.taxonomy_term.canonical', { 'taxonomy_term': term.id }) }}">
         <h2>{{ term.name }}</h2>
@@ -44,7 +44,7 @@
       <div class="items">
         <h2>{{ slide.title }}</h2>
         <img src={{ file_url(slide.image) }} alt="">
-        <p>{{ slide.body }}</p>
+        <p>{{ slide.body|striptags }}</p>
       </div>
       {% endfor %}
     </div>

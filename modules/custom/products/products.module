@@ -14,3 +14,33 @@ function products_theme($existing, $type, $theme, $path) {
     ],
   ];
 }
+
+function products_preprocess(&$variables, $hook){
+  if($hook == 'menu' && $variables['menu_name'] == "main"){
+    $idn = 0;
+    foreach ($variables['items'] as $item){
+      $route = $item['url']->getRouteName();
+      if($route == 'products.parent'){
+        $idn = 1;
+        break;
+      }
+    }
+    if($idn == 0){
+      $menu_link = \Drupal\menu_link_content\Entity\MenuLinkContent::create([
+        'title' => 'Products without parent!',
+        'link' => ['uri' => 'internal:/products/parent'],
+        'menu_name' => 'main',
+        'expanded' => FALSE,
+        'weight' => 0
+      ]);
+      $menu_link->save();
+    }
+    $current_path = \Drupal::request()->getRequestUri();
+    foreach ($variables['items'] as $key => $item){
+      if ($item['url']->toString() == $current_path) {
+        // Add active link.
+        $variables['items'][$key]['attributes']['class'] = 'active';
+      }
+    }
+  }
+}

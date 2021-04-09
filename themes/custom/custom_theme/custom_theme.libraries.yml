@@ -1,7 +1,3 @@
-#global:
-#  css:
-#    theme:
-#      css/global.css: {}
 bootstrap:
   css:
     theme:
